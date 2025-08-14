@@ -26,8 +26,8 @@ async def websocket_endpoint(websocket: WebSocket):
             user_query = data.get("query", "")
             print(f"Received message: {user_query}")
 
-            final_answer = 'Sorry, an error occurred in the agent.'
-            evaluation = 'No evaluation available.'
+            final_answer = ''
+            evaluation = ''
             status = 'error'
 
             try:

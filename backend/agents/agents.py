@@ -109,14 +109,8 @@ def evaluation_node(state: State) -> State:
     - Do not infer or assume missing information beyond what is provided.
     - The response must be directly parseable by JSON parsers.
     """
-    import json
-    # try:
+
     resp = llm.invoke(prompt).content
-    # print("Response from LLM:", resp)   
-   
-    # json_resp = json.loads(resp)
-    # print("Evaluation Result:", json_resp)
-    # except:
     state['eval_result'] = resp
     return state
 
@@ -146,15 +140,7 @@ with open("graph_diagram1.png", "wb") as f:
 
 async def run(query: str) -> State:
     """Run the agent with the given query."""
-    print("**"*50)
     result = await app.ainvoke({"query": query})
 
     return result
 # Example run
-if __name__ == "__main__":
-    query = "what is plan agent?"
-    import asyncio
-
-    result = asyncio.run(run(query))
-    pprint(result)
-    print(result.keys())

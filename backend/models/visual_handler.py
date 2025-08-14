@@ -18,36 +18,6 @@ class VisionProcessor:
         pil_image.save(buffered, format="JPEG")  # You can change the format if needed
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
         return img_str
-    
-    # def build_message(self, text, image_b64):
-    #     return [
-    #         {
-    #             "role": "user",
-    #             "content": [
-    #                 {"type": "text", "text": text},
-    #                 {"type": "image_url", "image_url": f"data:image/jpeg;base64,{image_b64}"}
-    #             ]
-    #         }
-    #     ]
-
-    # def prompt_func(self,data):
-    #     text = data["text"]
-    #     image = data["image"]
-
-    #     image_part = {
-    #         "type": "image_url",
-    #         "image_url": f"data:image/jpeg;base64,{image}",
-    #     }
-
-    #     content_parts = []
-
-    #     text_part = {"type": "text", "text": text}
-
-    #     content_parts.append(image_part)
-    #     content_parts.append(text_part)
-
-    #     return [HumanMessage(content=content_parts)]
-    
   
     
     def caption_image(self, image):
@@ -83,17 +53,6 @@ def process_image(layout_boxes, image):
         vlm_response = vision_processor.caption_image(cropped_image)  # Process with VLM
         image_captions.append(vlm_response)
     return image_captions  # Return the list of captions
-
-
-
-# if __name__ == "__main__":
-#     from PIL import Image
-#     image_path = r"C:\Users\antony.np\Downloads\test_image.PNG"  # Path to your image
-#     image = Image.open(image_path).convert("RGB")
-#     vlm_pipeline = VisionProcessor()
-#     caption = vlm_pipeline.caption_image(image)
-#     print(caption)
-
 
 
 
