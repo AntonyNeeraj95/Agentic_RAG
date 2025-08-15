@@ -96,3 +96,12 @@ RAG Agents/ ├── backend/ # FastAPI application ├── frontend/ # Strea
 ├── uploads/ # Document storage ├── docker-compose.yml # Service orchestration └── README.md # Documentation
 
 **🚀 Ready to build intelligent document Q&A systems!**
+
+## Agents Architecture
+
+<img width="269" height="531" alt="graph_diagram1" src="https://github.com/user-attachments/assets/a2a41a49-834c-488d-bdb7-162a4ea43934" />
+
+## UI snapshots
+
+<img width="1904" height="876" alt="snippet" src="https://github.com/user-attachments/assets/4c283fef-540d-40dc-bca0-7632dc856096" />
+<img width="1333" height="574" alt="snippet2" src="https://github.com/user-attachments/assets/4ca0c657-38ca-4c41-963d-a786eacfc2d1" />
