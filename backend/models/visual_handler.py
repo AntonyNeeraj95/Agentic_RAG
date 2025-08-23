@@ -1,8 +1,8 @@
 import base64
 from io import BytesIO
-from langchain_core.messages import HumanMessage
-# from langchain_ollama import ChatOllama
-from langchain_core.output_parsers import StrOutputParser
+
+import os
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
 class VisionProcessor:
 
@@ -39,7 +39,7 @@ class VisionProcessor:
             "temperature": 0,
         }
 
-        response = requests.post("http://localhost:11434/api/generate", json=payload)
+        response = requests.post(f"{OLLAMA_URL}/api/generate", json=payload)
         return response.json().get("response", "No response received.")
 
 

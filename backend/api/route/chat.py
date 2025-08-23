@@ -1,5 +1,4 @@
 import json
-import asyncio
 import traceback  # Import traceback for detailed error logging
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
@@ -54,7 +53,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 "original_query": user_query,
                 "status": status
             }
-            print("asdafrgfwrgrwgwgwgrwgwg\n")
+
             # Send the JSON response back to the client
             await websocket.send_json(response_payload)
             print("Sent response back to client:", response_payload)

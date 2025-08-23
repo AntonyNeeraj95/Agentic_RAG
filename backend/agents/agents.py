@@ -12,6 +12,7 @@ from IPython.display import Image
  
 from pprint import pprint
 
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 os.environ["SERPAPI_API_KEY"] = "67a7d178a26af541599594f1fa9e352bebf8311c87b597507ef950c300e16ab7"
 class State(TypedDict):
     query: str
@@ -69,7 +70,7 @@ def web_search_node(state: State) -> State:
 
 # --- Generation Agent ---
 def generation_node(state: State) -> State:
-    llm = ChatOllama(model="llama3.2:3b", temperature=0.1)
+    llm = ChatOllama(model="llama3.2:3b", temperature=0.1,base_url=OLLAMA_URL)
     docs_text = "\n\n".join([f"[{i+1}] {d.page_content}" for i, d in enumerate(state['docs'])])
     prompt = f"""
     You are a helpful assistant.
@@ -84,7 +85,7 @@ def generation_node(state: State) -> State:
 
 # --- Evaluation Agent ---
 def evaluation_node(state: State) -> State:
-    llm = ChatOllama(model="llama3.2:3b", temperature=0)
+    llm = ChatOllama(model="llama3.2:3b", temperature=0, base_url=OLLAMA_URL)
     docs_text = "\n\n".join([f"[{i+1}] {d.page_content}" for i, d in enumerate(state['docs'])])
     prompt = f"""
     Evaluate the following RAG output.

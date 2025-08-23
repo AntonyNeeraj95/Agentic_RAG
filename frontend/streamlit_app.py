@@ -10,6 +10,7 @@ import os
 
 # Backend API configuration
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+WEBSOCKET_URL = os.getenv("WEBSOCKET_URL", "ws://localhost:8000")
 API_BASE_URL = f"{BACKEND_URL}/api"  # Adjust based on your API structure
 
 
@@ -153,7 +154,7 @@ st.write("This chat connects to your FastAPI /api/v1/ws/chat WebSocket endpoint.
 # WebSocket URL and connection controls
 col1, col2, col3 = st.columns([4, 1, 1])
 with col1:
-    ws_url = st.text_input("WebSocket URL:", value=f"{API_BASE_URL}/v1/ws/chat")
+    ws_url = st.text_input("WebSocket URL:", value=f"{WEBSOCKET_URL}/api/v1/ws/chat")
 with col2:
     if st.button("Connect"):
         with st.spinner("Connecting..."):
@@ -205,7 +206,7 @@ with st.sidebar:
             try:
                 files = {"file": (uploaded_file.name, uploaded_file, "application/pdf")}
                 api_url = f"{API_BASE_URL}/v1/upload/pdf"
-                response = requests.post(api_url, files=files, timeout=30)
+                response = requests.post(api_url, files=files)
                 
                 if response.status_code == 200:
                     st.success("Document processed successfully!")

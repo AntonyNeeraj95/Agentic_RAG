@@ -6,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_qdrant import QdrantVectorStore
 
 QDRANT_COLLECTION: str = "AgenticRag"
-QDRANT_URL: str | None = os.getenv("QDRANT_URL")
+QDRANT_URL: str = os.getenv("QDRANT_URL","http://host.docker.internal:6333")
 QDRANT_PORT: int = int(os.getenv("QDRANT_PORT", "6333"))
 QDRANT_API_KEY: str | None = os.getenv("QDRANT_API_KEY")
 VECTOR_SIZE: int = 384
@@ -20,14 +20,13 @@ def initialize_qdrant_client():
 
 client = initialize_qdrant_client()
 
-
 def check_collection():
     collections = client.get_collections().collections
     collection_names = [c.name for c in collections]
     return collection_names
 
 
-def create_collection(client):
+def initialize_collection():
     collection_names = check_collection()
     if QDRANT_COLLECTION not in collection_names:
         client.create_collection(
@@ -42,15 +41,17 @@ def create_collection(client):
             }
         )
         print(f"Collection '{QDRANT_COLLECTION}' created!")
+        print("**"*50)
     else:
         print(f"Collection '{QDRANT_COLLECTION}' already exists.")
+        print("**"*50)
 
 
 def initialize_vector_store():
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
-    create_collection(client)
+    initialize_collection()
 
     vector_store = QdrantVectorStore(
         client=client,
@@ -67,5 +68,5 @@ vector_store = initialize_vector_store()
 
 async def add_documents(documents: List[Any]) -> None:
     """Add documents to the vector store."""
-    create_collection(client)
+    initialize_collection()
     await vector_store.aadd_documents(documents, batch_size=BATCH_SIZE)

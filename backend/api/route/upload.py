@@ -49,10 +49,12 @@ async def upload_file(
                 image.save(page_path)
 
                 # Detect layout using SuryaProcessor
+                print("detecting layout")
                 layout_bboxes = processor.detect_layout(image)
 
                 # Process text excluding figures and upsert
                 process_text = processor.process_text(image, layout_bboxes)
+                print("processing text")
                 chunks = await handler.load_document_chunks(process_text)
                 await handler.upsert_embeddings(chunks)
 

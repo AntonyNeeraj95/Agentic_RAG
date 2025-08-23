@@ -20,7 +20,7 @@ class DocumentProcess:
             chunk_overlap: int = 200,
             batch_size: int = 100,
             embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-            # embedding_class: Literal["openai", "huggingface", "fake"] = "openai",
+   
         ):
         self.file_name = file_name
         self.doc_id = doc_id
@@ -29,8 +29,7 @@ class DocumentProcess:
         self.chunk_overlap = chunk_overlap
         self.batch_size = batch_size
         self.embedding_model = embedding_model
-        # self.embedding_class = embedding_class
-
+       
     def document_loader(self,document):
 
         return [Document(page_content=document)]
