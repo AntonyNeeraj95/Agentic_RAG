@@ -23,23 +23,38 @@ Frontend (Streamlit) ──→ Backend (FastAPI) ──→ Qdrant (Vector DB) :8
 
 ### Prerequisites
 - Docker & Docker Compose
-- Python 3.11+ (for local dev)
+- Python 3.13+ (for local dev)
+- Ollama 
 
-### Run with Docker
 
-bash
-# Clone and start all services
-git clone <repository-url> cd RAG-Agents docker-compose up -d
-# Access applications
-# Frontend: [http://localhost:8501](http://localhost:8501)
-# Backend API: [http://localhost:8000/docs](http://localhost:8000/docs)
-# Qdrant: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
 
-### Local Development
-# Backend
-cd backend uv sync docker run -p 6333:6333 qdrant/qdrant # Start Qdrant uv run uvicorn main:app --reload --port 8000
-# Frontend (new terminal)
-cd frontend pip install -r requirements.txt export BACKEND_URL=[http://localhost:8000](http://localhost:8000) streamlit run streamlit_app.py --server.port 8501
+## Ensure Ollama is installed in the system.
+## Clone and start all services
+```
+git clone <repository-url>
+cd RAG-Agents 
+docker-compose up -d
+```
+## Access applications
+### Frontend: [http://localhost:8501](http://localhost:8501)
+### Backend API: [http://localhost:8000/docs](http://localhost:8000/docs)
+### Qdrant: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
+
+# Local Development
+## Backend
+```
+cd backend
+uv sync
+docker run -p 6333:6333 qdrant/qdrant # Start Qdrant
+uv run main.py
+```
+## Frontend (new terminal)
+```
+cd frontend
+pip install -r requirements.txt
+export BACKEND_URL=[http://localhost:8000](http://localhost:8000)
+streamlit run streamlit_app.py --server.port 8501
+```
 
 ## 📚 Usage
 
@@ -53,11 +68,11 @@ cd frontend pip install -r requirements.txt export BACKEND_URL=[http://localhost
 2. Get answers with source attribution
 3. View confidence scores and relevant chunks
 
-### API Examples
-# Upload document
+## API Examples
+### Upload document
 curl -X POST "[http://localhost:8000/upload](http://localhost:8000/upload)"
 -F "file=@document.pdf"
-# Query
+### Query
 curl -X POST "[http://localhost:8000/query](http://localhost:8000/query)"
 -H "Content-Type: application/json"
 -d '{"query": "Your question here"}'
@@ -69,13 +84,13 @@ curl -X POST "[http://localhost:8000/query](http://localhost:8000/query)"
 - `QDRANT_HOST/PORT`: Backend → Qdrant connection
 
 ## 🐳 Docker Commands
-# Start services
+### Start services
 docker-compose up -d
-# View logs
+### View logs
 docker-compose logs -f
-# Stop services
+### Stop services
 docker-compose down
-# Rebuild
+### Rebuild
 docker-compose up --build -d
 
 ## 🛠️ Troubleshooting
